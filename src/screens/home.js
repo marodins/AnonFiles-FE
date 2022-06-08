@@ -1,10 +1,14 @@
 
 import {Button, Grid, TextField, Divider, Container} from '@mui/material';
 import {TextFieldHome} from '../components/room_input';
+import {useHistory} from 'react-router';
 
 export var Home =({sock})=>{
+
+    let history = useHistory();
     const SubmitButtonHandler = ()=>{
         sock.socket.emit("make_room");
+        history.push('/rooms')
     }
     return (
         <Container>

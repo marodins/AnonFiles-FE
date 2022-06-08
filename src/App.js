@@ -30,7 +30,7 @@ function App() {
     <Router>
         <Routes>
           <Route path='/' element={<Home sock={socket}/>}/>
-          <Route path='/room' element={<Rooms sock={socket}/>}/>
+          <Route path='/rooms' element={<Rooms sock={socket}/>}/>
         </Routes>
     </Router>
   );

@@ -14,18 +14,20 @@ class SocketConnect {
     registerEvents(){
         this.socket.on('connect', ()=>{
             console.log('user_connected', this.socket.id);
-        })
+        });
         this.socket.on('joined', (room_info)=>{
             console.log('room info',room_info);
-        })
+        });
         this.socket.on('created', (room_info)=>{
             const new_room = Room(room_info["room"], room_info["password"]);
             this.current_rooms.push(new_room);
 
-        })
+        });
+        this.socket.on('all_rooms', rooms=>this.current_rooms=rooms);
+
         this.socket.on('message', (message)=>{
             console.log('message', message);
-        })
+        });
     }
 
 }

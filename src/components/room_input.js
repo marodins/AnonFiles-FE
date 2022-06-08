@@ -10,7 +10,6 @@ export var TextFieldHome = ({sock})=>{
 
     const SubmitButtonHandler = ()=>{
         sock.socket.emit("try_room", {"name":room_name, "pass":room_pass});
-        
     }
     return (
         <Grid>
