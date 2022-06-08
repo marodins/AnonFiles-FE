@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+
+import {
+  Routes,
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+
+import {useState, useEffect} from 'react';
+
+import {Home} from './screens/home';
+import {Rooms} from './screens/rooms';
+import config from './config.json';
+import SocketConnect from './models/connection';
+import {io} from 'socket.io-client';
 
 function App() {
+  const [socket, setSocket] = useState(0);
+
+  useEffect(()=>{
+    const newSock = new SocketConnect();
+    newSock.init_sock();
+    setSocket(newSock);
+    return ()=>{
+      newSock.socket.close();
+    }
+  }, [setSocket]);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <Routes>
+          <Route path='/' element={<Home sock={socket}/>}/>
+          <Route path='/room' element={<Rooms sock={socket}/>}/>
+        </Routes>
+    </Router>
   );
 }
 
