@@ -14,15 +14,16 @@ import config from './config.json';
 import SocketConnect from './models/connection';
 import {io} from 'socket.io-client';
 
+
 function App() {
   const [socket, setSocket] = useState(0);
 
   useEffect(()=>{
-    const newSock = new SocketConnect();
-    newSock.init_sock();
-    setSocket(newSock);
+    const sock = new SocketConnect();
+    sock.init_sock();
+    setSocket(sock);
     return ()=>{
-      newSock.socket.close();
+      sock.socket.close();
     }
   }, [setSocket]);
   

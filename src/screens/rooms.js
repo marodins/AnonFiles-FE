@@ -1,38 +1,62 @@
-import {Grid,Button,TextField, List, ListItem, ListItemText, ListItemButton} from '@mui/material';
-import { useEffect } from 'react';
+import {
+    Grid,
+    Button,
+    TextField, 
+    List, 
+    ListItem, 
+    ListItemText, 
+    ListItemButton,
+    CircularProgress,
+    Box
+} from '@mui/material';
+import { useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 
-
-export var Rooms = ({socket}) => {
+export var Rooms = ({sock}) => {
     const [rooms, setRooms] = useState(0);
     const [selectedIndex, setSelected] = useState(0);
-
+    const navigate = useNavigate();
     useEffect(()=>{
-        socket.socket.emit('get_rooms');
-        setRooms(socket.current_rooms);
-    })
+        if(sock){
+            sock.socket.on('all_rooms',(rooms)=>{
+                setRooms(rooms);
+            } )
+            sock.socket.emit('get_rooms');            
+        }else{
+            navigate('/');
+        }
+
+    }, [])
 
     return (
+        
         <Grid>
-            <List>
+            {rooms === 0? 
+                <Box sx={{display: 'flex'}}>
+                    <CircularProgress/>
+                </Box>:
+                        <List>
             
-            {rooms.map((val, index)=>{
-                return (
-                    <ListItem alignItems='flex-start'>
-                        <ListItemButton
-                            selected={selectedIndex===index}
-                            onClick={(e)=>{
-                                setSelected(index);
-                            }}
-                        >
-                            <ListItemText primary={val}/>
+                        {rooms.map((val, index)=>{
+                            return (
+                                <ListItem alignItems='flex-start' key={val}>
+                                    <ListItemButton
+                                        selected={selectedIndex===index}
+                                        onClick={(e)=>{
+                                            setSelected(index);
+                                        }}
+                                    >
+                                        <ListItemText primary={val}/>
+            
+                                    </ListItemButton>
+                                </ListItem>
+                            );
+            
+                        })}
+                        </List>
+            }
 
-                        </ListItemButton>
-                    </ListItem>
-                );
-
-            })}
-            </List>
         </Grid>
     )
 }

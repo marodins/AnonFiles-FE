@@ -1,14 +1,18 @@
 
 import {Button, Grid, TextField, Divider, Container} from '@mui/material';
 import {TextFieldHome} from '../components/room_input';
-import {useHistory} from 'react-router';
+import {useNavigate} from 'react-router';
 
 export var Home =({sock})=>{
 
-    let history = useHistory();
-    const SubmitButtonHandler = ()=>{
-        sock.socket.emit("make_room");
-        history.push('/rooms')
+    let navigate = useNavigate();
+    const submitButtonHandler = ()=>{
+        if(sock.socket.connected){
+            sock.socket.emit("make_room");
+            navigate('/rooms');         
+        }else{
+            console.log('socket not connected');
+        }
     }
     return (
         <Container>
@@ -21,7 +25,7 @@ export var Home =({sock})=>{
             justifyContent='center'
             >
                 <Grid item xs>
-                    <Button variant="contained">
+                    <Button variant="contained" onClick={submitButtonHandler}>
                         Make Room
                     </Button>
                 </Grid>
