@@ -15,7 +15,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 export var Rooms = ({sock}) => {
     const [rooms, setRooms] = useState(0);
-    const [selectedIndex, setSelected] = useState(0);
+    const [selectedId, setSelected] = useState(0);
+
     const navigate = useNavigate();
     useEffect(()=>{
         if(sock){
@@ -29,8 +30,11 @@ export var Rooms = ({sock}) => {
 
     }, [])
 
+    const handle_select = ()=>{
+        navigate('/room', {state:{roomId:selectedId}});
+    }
+
     return (
-        
         <Grid>
             {rooms === 0? 
                 <Box sx={{display: 'flex'}}>
@@ -42,9 +46,10 @@ export var Rooms = ({sock}) => {
                             return (
                                 <ListItem alignItems='flex-start' key={val}>
                                     <ListItemButton
-                                        selected={selectedIndex===index}
+                                        selected={selectedId===val}
                                         onClick={(e)=>{
-                                            setSelected(index);
+                                            setSelected(val);
+                                            handle_select();
                                         }}
                                     >
                                         <ListItemText primary={val}/>

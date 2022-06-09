@@ -29,11 +29,11 @@ class SocketConnect {
 
         });
 
-        this.socket.on('message', (message)=>{
-            console.log('message', message);
+        this.socket.on('error', (err)=>{
+            console.log('err', err);
         });
     }
 
 }
 
-export default SocketConnect;
+export default SocketConnect();

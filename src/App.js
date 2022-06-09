@@ -11,15 +11,14 @@ import {useState, useEffect} from 'react';
 import {Home} from './screens/home';
 import {Rooms} from './screens/rooms';
 import config from './config.json';
-import SocketConnect from './models/connection';
+import sock from './models/connection';
 import {io} from 'socket.io-client';
-
+import {Room} from './screens/room';
 
 function App() {
   const [socket, setSocket] = useState(0);
 
   useEffect(()=>{
-    const sock = new SocketConnect();
     sock.init_sock();
     setSocket(sock);
     return ()=>{
@@ -32,6 +31,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home sock={socket}/>}/>
           <Route path='/rooms' element={<Rooms sock={socket}/>}/>
+          <Route path='/room' element={<Room/>}/>
         </Routes>
     </Router>
   );
