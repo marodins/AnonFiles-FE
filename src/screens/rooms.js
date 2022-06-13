@@ -11,27 +11,25 @@ import {
 } from '@mui/material';
 import { useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
+import sock from '../models/connection';
 
-
-export var Rooms = ({sock}) => {
+export var Rooms = () => {
     const [rooms, setRooms] = useState(0);
     const [selectedId, setSelected] = useState(0);
 
     const navigate = useNavigate();
     useEffect(()=>{
-        if(sock){
+        if(sock.socket && sock.socket.connected){
             sock.socket.on('all_rooms',(rooms)=>{
                 setRooms(rooms);
             } )
             sock.socket.emit('get_rooms');            
-        }else{
-            navigate('/');
         }
 
-    }, [])
+    }, [sock.socket])
 
-    const handle_select = ()=>{
-        navigate('/room', {state:{roomId:selectedId}});
+    const handle_select = (val)=>{
+        navigate('/room', {state:{roomId:val}});
     }
 
     return (
@@ -43,20 +41,23 @@ export var Rooms = ({sock}) => {
                         <List>
             
                         {rooms.map((val, index)=>{
-                            return (
-                                <ListItem alignItems='flex-start' key={val}>
-                                    <ListItemButton
-                                        selected={selectedId===val}
-                                        onClick={(e)=>{
-                                            setSelected(val);
-                                            handle_select();
-                                        }}
-                                    >
-                                        <ListItemText primary={val}/>
-            
-                                    </ListItemButton>
-                                </ListItem>
-                            );
+                            if(val!=sock.socket.id){
+                                return (
+                                    <ListItem alignItems='flex-start' key={val}>
+                                        <ListItemButton
+                                            selected={selectedId===val}
+                                            onClick={(e)=>{
+                                                setSelected(val);
+                                                handle_select(val);
+                                            }}
+                                        >
+                                            <ListItemText primary={val}/>
+                
+                                        </ListItemButton>
+                                    </ListItem>
+                                );
+                            }
+
             
                         })}
                         </List>

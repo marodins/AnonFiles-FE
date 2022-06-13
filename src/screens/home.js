@@ -1,14 +1,31 @@
 
-import {Button, Grid, TextField, Divider, Container} from '@mui/material';
+import {Button, Grid, TextField, Divider, Container, CircularProgress} from '@mui/material';
 import {TextFieldHome} from '../components/room_input';
 import {useNavigate} from 'react-router';
+import { useEffect, useState } from 'react';
+import socket from '../models/connection';
 
-export var Home =({sock})=>{
+export var Home =()=>{
 
     let navigate = useNavigate();
+
+    useEffect(()=>{
+        if(socket.socket){
+            console.log("connected", socket.socket.connected)
+            socket.socket.on('joined', ({room})=>{
+                console.log('received trigger on join');
+                navigate('/room', {state:{roomId:room}});
+            });
+        }else{
+            console.log('no socket');
+        }
+
+    },[socket.socket]);
+    
     const submitButtonHandler = ()=>{
-        if(sock.socket.connected){
-            sock.socket.emit("make_room");
+        if(socket.socket.connected){
+            
+            socket.socket.emit("make_room");
             navigate('/rooms');         
         }else{
             console.log('socket not connected');
@@ -33,7 +50,7 @@ export var Home =({sock})=>{
                 <Divider>or</Divider> 
                 </Grid>
                 
-                <TextFieldHome sock={sock}/>
+                <TextFieldHome socket={socket}/>
       
 
             </Grid>

@@ -4,12 +4,13 @@ import {TextField, Grid, Button} from '@mui/material';
 import SocketConnect from '../models/connection';
 
 
-export var TextFieldHome = ({sock})=>{
+export var TextFieldHome = ({socket})=>{
     const [room_name, setName] = useState(0);
     const [room_pass, setPass] = useState(0);
 
-    const SubmitButtonHandler = ()=>{
-        sock.socket.emit("try_room", {"name":room_name, "pass":room_pass});
+    const submitButtonHandler = ()=>{
+        console.log('trying to join', socket.socket.connected);
+        socket.socket.emit("try_room", {"name":room_name, "pass":room_pass});
     }
     return (
         <Grid>
@@ -22,15 +23,15 @@ export var TextFieldHome = ({sock})=>{
                 Room Name
             </TextField> 
             <TextField 
-                    id="room-pass" 
-                    label='room-pass' 
-                    variant='outlined'
-                    onChange={(e)=>{setPass(e.target.value)}} 
-                    required >
-                    Room Pass
+                id="room-pass" 
+                label='room-pass' 
+                variant='outlined'
+                onChange={(e)=>{setPass(e.target.value)}} 
+                required >
+                Room Pass
             </TextField>
             <Grid item xs>
-                    <Button variant="contained" onClick={SubmitButtonHandler}> Submit </Button>  
+                    <Button variant="contained" onClick={submitButtonHandler}> Submit </Button>  
             </Grid>
         </Grid>
 
