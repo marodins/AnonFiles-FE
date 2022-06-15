@@ -4,6 +4,7 @@ import {TextFieldHome} from '../components/room_input';
 import {useNavigate} from 'react-router';
 import { useEffect, useState } from 'react';
 import socket from '../models/connection';
+import LoginButton from '../components/login';
 
 export var Home =()=>{
 
@@ -45,6 +46,7 @@ export var Home =()=>{
                     <Button variant="contained" onClick={submitButtonHandler}>
                         Make Room
                     </Button>
+                    <LoginButton/>
                 </Grid>
                 <Grid item xs>
                 <Divider>or</Divider> 
