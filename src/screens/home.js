@@ -6,11 +6,12 @@ import { useEffect, useState } from 'react';
 import socket from '../models/connection';
 import LoginButton from '../components/login';
 
-export var Home =()=>{
+export var Home =({cookies})=>{
 
     let navigate = useNavigate();
-
+    
     useEffect(()=>{
+        console.log(cookies)
         if(socket.socket){
             console.log("connected", socket.socket.connected)
             socket.socket.on('joined', ({room})=>{
@@ -46,7 +47,7 @@ export var Home =()=>{
                     <Button variant="contained" onClick={submitButtonHandler}>
                         Make Room
                     </Button>
-                    <LoginButton/>
+                    {cookies && cookies.token_id?null:<LoginButton/>}
                 </Grid>
                 <Grid item xs>
                 <Divider>or</Divider> 

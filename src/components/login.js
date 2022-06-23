@@ -11,7 +11,7 @@ const LoginButton = ()=>{
         if(socket.socket && socket.socket.connected){
             socket.socket.disconnect();
         }
-        axios.get('authorize');
+        window.location.href = 'http://localhost:8080/authorize'
     }
     return (
         <Grid>

@@ -38,7 +38,7 @@ function App() {
   return (
     <Router>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<Home cookies={cookies}/>}/>
           <Route path='/rooms' element={<Rooms/>}/>
           <Route path='/room' element={<Room/>}/>
         </Routes>
