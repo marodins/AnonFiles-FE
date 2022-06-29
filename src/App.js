@@ -16,6 +16,8 @@ import {io} from 'socket.io-client';
 import {Room} from './screens/room';
 import axios from './network/axios_instance';
 import {useCookies} from 'react-cookie';
+import user from './models/user';
+
 
 function App() {
   const [, setSocket] = useState(0);
@@ -24,8 +26,8 @@ function App() {
   useEffect(()=>{
     //send cookie on connect only!!!
     //handle on connect server side
-    console.log(cookies);
-    sock.init_sock();
+    user.setToken(cookies.token_id);
+    sock.init_sock(cookies.token_id);
     sock.socket.on('connect', ()=>{  
       setSocket(sock);
       console.log('user connected', sock.socket.id);

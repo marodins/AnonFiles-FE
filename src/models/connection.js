@@ -8,8 +8,8 @@ class SocketConnect {
         this.socket = null;
         this.current_rooms = [];
     }
-    init_sock(){
-        this.socket=io(config.server_url+'/user');
+    init_sock(token){
+        this.socket=io(config.server_url+'/user', {auth:{token:token}});
         this.registerEvents();
 
     }

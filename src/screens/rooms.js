@@ -12,18 +12,20 @@ import {
 import { useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import sock from '../models/connection';
+import user from '../models/user';
 
 export var Rooms = () => {
     const [rooms, setRooms] = useState(0);
     const [selectedId, setSelected] = useState(0);
 
     const navigate = useNavigate();
+
     useEffect(()=>{
         if(sock.socket && sock.socket.connected){
             sock.socket.on('all_rooms',(rooms)=>{
                 setRooms(rooms);
-            } )
-            sock.socket.emit('get_rooms');            
+            })
+            sock.socket.emit('get_rooms');
         }
 
     }, [sock.socket])

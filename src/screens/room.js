@@ -6,6 +6,7 @@ import UserDash from "../components/user_dash";
 import { ChatMessages } from "../components/chat";
 import { TextField, Button, Grid, CircularProgress } from "@mui/material";
 import { not_connected } from "../messages/errors";
+import user from '../models/user';
 
 export const Room = ()=>{
     const [messages, setMessages] = useState([]);
@@ -54,7 +55,7 @@ export const Room = ()=>{
         console.log('will emit soon', roomId)
         const message = new Message(socket.socket.id, messageInput);
         messages.push(message);
-        socket.socket.emit('send_message', {"room":roomId, "message":messageInput});
+        socket.socket.emit('send_message', {"room":roomId, "message":messageInput, "token":user.token});
         setMessages(messages);
         setMessageInput('');
         
