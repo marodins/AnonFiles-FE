@@ -13,7 +13,7 @@ import socket from '../models/connection';
 
 
 const UsersDash = ({room})=>{
-    const [usersList, setUsers] = useState([]);
+    const [usersList, setUsers] = useState([socket.user_id]);
     useEffect(()=>{
         console.log('cb invoked');
         socket.socket.on('joined', ({user})=>{
@@ -27,7 +27,7 @@ const UsersDash = ({room})=>{
             console.log('getting users', users);
     })
         socket.socket.emit('get_users', {"room":room});
-    },[socket.socket]);
+    },[socket.socket, setUsers]);
     return (
         <Grid container justifyContent={'left'}>
             {usersList.length == 0? null:

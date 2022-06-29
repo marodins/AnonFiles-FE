@@ -7,6 +7,7 @@ class SocketConnect {
     constructor(){
         this.socket = null;
         this.current_rooms = [];
+        this.user_id='';
     }
     init_sock(token){
         this.socket=io(config.server_url+'/user', {auth:{token:token}});
@@ -21,6 +22,9 @@ class SocketConnect {
             const new_room = new Room(room_info["room"], room_info["password"]);
             this.current_rooms.push(new_room);
 
+        });
+        this.socket.on('connected_data', ({user_id})=>{
+            this.user_id=user_id;
         });
         this.socket.on('error', (err)=>{
             console.log('err', err);
