@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router';
 import { useEffect, useState } from 'react';
 import socket from '../models/connection';
 import LoginButton from '../components/login';
+import { Link } from 'react-router-dom';
 
 export var Home =({cookies})=>{
 
@@ -44,9 +45,15 @@ export var Home =({cookies})=>{
             justifyContent='center'
             >
                 <Grid item xs>
-                    <Button variant="contained" onClick={submitButtonHandler}>
-                        Make Room
-                    </Button>
+                    <Grid>
+                        <Button variant="contained" onClick={submitButtonHandler}>
+                            Make Room
+                        </Button>
+                        <Button variant="contained" onClick={()=>navigate('/rooms')}>Rooms</Button>
+                    </Grid>
+                    <Grid>
+
+                    </Grid>
                     {cookies && cookies.token_id?null:<LoginButton/>}
                 </Grid>
                 <Grid item xs>

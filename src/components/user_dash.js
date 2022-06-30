@@ -13,7 +13,7 @@ import socket from '../models/connection';
 
 
 const UsersDash = ({room})=>{
-    const [usersList, setUsers] = useState([socket.user_id]);
+    const [usersList, setUsers] = useState([socket.user.user_id]);
     useEffect(()=>{
         console.log('cb invoked');
         socket.socket.on('joined', ({user})=>{
