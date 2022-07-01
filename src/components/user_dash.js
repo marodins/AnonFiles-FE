@@ -13,12 +13,11 @@ import socket from '../models/connection';
 
 
 const UsersDash = ({room})=>{
-    const [usersList, setUsers] = useState([socket.user.user_id]);
+    const [usersList, setUsers] = useState([socket.user.name]);
     useEffect(()=>{
         console.log('cb invoked');
         socket.socket.on('joined', ({user})=>{
-            usersList.push(user);
-            setUsers(usersList)
+            setUsers([...usersList, user])
         })
         socket.socket.on('all_users', ({users})=>{
             let filtered = users.filter(item=>!usersList.includes(item));
@@ -29,7 +28,8 @@ const UsersDash = ({room})=>{
         socket.socket.emit('get_users', {"room":room});
     },[socket.socket, setUsers]);
     return (
-        <Grid container justifyContent={'left'}>
+    <Grid container direction='column' justifyContent='left' alignItems='left' spacing={0} xs={3}>
+        <Grid item xs={1}>
             {usersList.length == 0? null:
                 <List>
                 {
@@ -47,6 +47,7 @@ const UsersDash = ({room})=>{
                 }               
                 </List>
             }
+        </Grid>
         </Grid>
     )
 }

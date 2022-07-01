@@ -25,8 +25,9 @@ class SocketConnect {
             this.current_rooms.push(new_room);
 
         });
-        this.socket.on('connected_data', ({user_id})=>{
-            this.user.user_id=user_id;
+        this.socket.on('connected_data', ({user_id, user_name})=>{
+            this.user.user_id = user_id;
+            this.user.name = user_name;
         });
         this.socket.on('error', (err)=>{
             console.log('err', err);

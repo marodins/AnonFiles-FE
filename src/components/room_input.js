@@ -16,24 +16,30 @@ export var TextFieldHome = ({socket})=>{
 
     }
     return (
-        <Grid>
-            <TextField 
-                id="room-name" 
-                label='room-name' 
-                variant='outlined'
-                onChange={(e)=>{setName(e.target.value)}} 
-                required >
-                Room Name
-            </TextField> 
-            <TextField 
-                id="room-pass" 
-                label='room-pass' 
-                variant='outlined'
-                onChange={(e)=>{setPass(e.target.value)}} 
-                required >
-                Room Pass
-            </TextField>
-            <Grid item xs>
+        <Grid container spacing={{md:2}} justifyContent='center' direction='column' alignItems='center'>
+            <Grid item xs={3}>
+                <TextField 
+                    id="room-name" 
+                    label='room-name' 
+                    variant='outlined'
+                    onChange={(e)=>{setName(e.target.value)}} 
+                    required >
+                    Room Name
+                </TextField>
+            </Grid>
+            <Grid item xs={3}> 
+                <TextField 
+                    id="room-pass" 
+                    label='room-pass' 
+                    variant='outlined'
+                    onChange={(e)=>{setPass(e.target.value)}} 
+                    required >
+                    Room Pass
+                </TextField>
+
+            </Grid>
+           
+            <Grid item xs={1} align='right'>
                     <Button variant="contained" onClick={submitButtonHandler}> Submit </Button>  
             </Grid>
         </Grid>

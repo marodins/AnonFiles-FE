@@ -35,7 +35,7 @@ export var Rooms = () => {
     }
 
     return (
-        <Grid>
+        <Grid container justifyContent='center' align='center' direction='row'>
             {rooms === 0? 
                 <Box sx={{display: 'flex'}}>
                     <CircularProgress/>

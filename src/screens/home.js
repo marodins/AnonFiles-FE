@@ -37,28 +37,33 @@ export var Home =({cookies})=>{
     return (
         <Container>
             <Grid
-            container spacing={2}
-            rowSpacing={2}
-            columnSpacing={{xs:3, md:2}}
+            container
+            columns={{xs:2, md:2}}
             direction='column'
             alignItems='center'
             justifyContent='center'
             >
-                <Grid item xs>
-                    <Grid>
+                <Grid container align='right' xs={5}>
+                         <Grid item xs>
+                            {cookies && cookies.token_id?null:<LoginButton/>}
+                        </Grid>                   
+                </Grid>
+                <Grid container columns={{xs:3, md:10}} direction='column' rowSpacing={2} alignItems='center'>
+
+                    <Grid item xs>
                         <Button variant="contained" onClick={submitButtonHandler}>
                             Make Room
                         </Button>
-                        <Button variant="contained" onClick={()=>navigate('/rooms')}>Rooms</Button>
                     </Grid>
-                    <Grid>
+                    <Grid item xs>
+                        <Button variant="contained" onClick={()=>navigate('/rooms')}>Your Rooms</Button>
+                        <Grid item xs>
+                            <Divider>or</Divider>
+                        </Grid>
+                    </Grid>
+                   
+                </Grid>
 
-                    </Grid>
-                    {cookies && cookies.token_id?null:<LoginButton/>}
-                </Grid>
-                <Grid item xs>
-                <Divider>or</Divider> 
-                </Grid>
                 
                 <TextFieldHome socket={socket}/>
       

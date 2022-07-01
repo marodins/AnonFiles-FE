@@ -1,9 +1,9 @@
 
 export class Message{
-    constructor(user, message, time=null){
+    constructor(user, message, time=new Date().toLocaleString()){
         this.user = user;
         this.message = message;
-        this.time = 0
+        this.time = time;
     }
 }
 
