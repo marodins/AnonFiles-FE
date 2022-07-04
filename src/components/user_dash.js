@@ -24,6 +24,10 @@ const UsersDash = ({room})=>{
             filtered = [...filtered, ...usersList];
             setUsers(filtered)
             console.log('getting users', users);
+
+        socket.socket.on('left', ({user})=>{
+            setUsers(usersList.filter(item=>item !== user))
+        })
     })
         socket.socket.emit('get_users', {"room":room});
     },[socket.socket, setUsers]);

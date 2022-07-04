@@ -9,7 +9,7 @@ export var TextFieldHome = ({socket})=>{
     const [room_pass, setPass] = useState(0);
 
     const submitButtonHandler = ()=>{
-        if(room_name != 0 && room_pass != 0){
+        if(room_name !== 0 && room_pass !== 0){
             console.log('trying to join', socket.socket.connected);
             socket.socket.emit("try_room", {"name":room_name, "pass":room_pass});
         }

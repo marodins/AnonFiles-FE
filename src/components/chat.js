@@ -55,7 +55,7 @@ export const ChatMessages = ({roomId})=>{
 
     const send_message = ()=>{
         console.log('will emit soon', roomId)
-        const message = new Message(socket.user.name, messageInput);
+        const message = new Message(socket.user.name,socket.user.user_id, messageInput);
         socket.socket.emit('send_message', {"room":roomId, "message":messageInput, "token":socket.user.token});
         setMessages([...messages, message]);
         setMessageInput('');
@@ -68,27 +68,31 @@ export const ChatMessages = ({roomId})=>{
     }
     
     return (
-        <Grid container direction='column' alignContent={'left'} alignItems={'left'} spacing={3} xs={2}>
-            <Grid item xs={2}>
+        <Grid container direction='column' alignContent={'left'} alignItems={'left'} spacing={3} xs={4}>
+            <Grid item xs={1}>
                
                 <Paper style={{overflow:'auto', height:500, width:500}}>
                                  {gettingMessages?
                                 <CircularProgress/>:<List>
                                 { messages==0?<Box></Box>:
                                     messages.map((m, index)=>{
+                                        var justification = m.user_id == socket.user.user_id? 'right' : 'left';
                                         return (
-
+                                            
                                                 <ListItem key={index} ref={scroll}>
-                                                    <Grid item>
-                                                        <ListItemText>
-                                                            {`${m.message}  
-                                                            ${m.time}   
-                                                            ${m.user}`}
-                                                        </ListItemText>
-                                                    </Grid>
-                                                    
-                                                </ListItem>                            
+                                                    <Grid container direction={'row'} justifyContent={justification}>
+                                                        <Grid item>
+                                                            <ListItemText>
+                                                                {m.message}
+                                                            </ListItemText>
+                                                            <ListItemText>
+                                                                {`${m.time}   ${m.user}`}
+                                                            </ListItemText>
 
+                                                        </Grid>
+                                                   </Grid>  
+                                                </ListItem>                            
+                                           
 
                                         );
                                     })
