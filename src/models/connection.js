@@ -13,9 +13,8 @@ class SocketConnect {
     init_sock(token){
         this.socket=io(config.server_url+'/user', {auth:{token:token}});
         this.user.token = token
-        this.registerEvents();
-
     }
+    
     registerEvents(){
         this.socket.on('disconnect', ()=>{
             console.log('disconnected');

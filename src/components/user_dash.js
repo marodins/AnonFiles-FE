@@ -13,36 +13,53 @@ import socket from '../models/connection';
 
 
 const UsersDash = ({room})=>{
-    const [usersList, setUsers] = useState([socket.user.name]);
-    useEffect(()=>{
-        console.log('cb invoked');
-        socket.socket.on('joined', ({user})=>{
-            setUsers([...usersList, user])
-        })
-        socket.socket.on('all_users', ({users})=>{
-            let filtered = users.filter(item=>!usersList.includes(item));
-            filtered = [...filtered, ...usersList];
-            setUsers(filtered)
-            console.log('getting users', users);
+    const user_id = socket.user.user_id;
+    const user_name = socket.user.name;
+    const [usersList, setUsers] = useState([{user_id:user_name}]);
 
-        socket.socket.on('left', ({user})=>{
-            setUsers(usersList.filter(item=>item !== user))
-        })
-    })
+    useEffect(()=>{
+        console.log('adding join etc')
+        const handleJoined = ({user})=>{
+            setUsers((prev)=>[...prev,user]);
+        }
+        const handleAll = ({users})=>{
+            //let user_ids = Object.keys(users);
+            //let filtered = users.filter(item=>!usersList.includes(item));
+            //filtered = [...filtered, ...usersList];
+            setUsers(users);
+        }
+        const handleLeft = ({user})=>{
+            setUsers((usersList)=>usersList.filter(item=>{
+                const [user_id, user_name] = Object.entries(item)[0];
+                return user_id !== user;
+            }));
+        }
+        socket.socket.on('joined',handleJoined);
+        socket.socket.on('all_users', handleAll);
+        socket.socket.on('left', handleLeft);
         socket.socket.emit('get_users', {"room":room});
-    },[socket.socket, setUsers]);
+
+        return ()=>{
+            console.log('removing joined, all_users, left');
+            socket.socket.off('joined', handleJoined);
+            socket.socket.off('all_users', handleAll);
+            socket.socket.off('left', handleLeft);
+        }
+
+    }, [socket.socket]);
     return (
-    <Grid container direction='column' justifyContent='left' alignItems='left' spacing={0} xs={3}>
+    <Grid container direction='column' justifyContent='left' alignItems='left' spacing={3} xs={3}>
         <Grid item xs={1}>
             {usersList.length == 0? null:
                 <List>
                 {
                     usersList.map((item, index)=>{
+                        let [user_id, user_name] = Object.entries(item)[0];
                         return (
-                            <ListItem key={item}>
+                            <ListItem key={user_id}>
                                 <ListItemButton>
                                     <ListItemText>
-                                        {item}
+                                        {user_name}
                                     </ListItemText>
                                 </ListItemButton>
                             </ListItem>

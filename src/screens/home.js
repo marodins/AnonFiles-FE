@@ -22,6 +22,9 @@ export var Home =({cookies})=>{
         }else{
             console.log('no socket');
         }
+        return ()=>{
+            socket.socket.off('joined');
+        }
 
     },[socket.socket]);
     

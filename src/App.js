@@ -26,11 +26,15 @@ function App() {
     //send cookie on connect only!!!
     //handle on connect server side
     sock.init_sock(cookies.token_id);
-    sock.socket.on('connect', ()=>{  
-      setSocket(sock);
+    sock.registerEvents();
+    sock.socket.on('connect', ()=>{
+
+      setSocket();
+      
       console.log('user connected', sock.socket.id);
     });
     return ()=>{
+      console.log('closing socket')
       sock.socket.close();
     }
   }, [setSocket]);
