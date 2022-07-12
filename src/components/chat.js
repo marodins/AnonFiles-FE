@@ -67,22 +67,32 @@ export const ChatMessages = ({roomId})=>{
             return
         }
         const message = new Message(socket.user.name,socket.user.user_id, messageInput);
+        const file_messages = [];
+        var filem = null;
+
         if(messageInput !== ''){
             socket.socket.emit('send_message', {"room":roomId, "message":messageInput, "token":socket.user.token});
         }
         if (selectedFiles.length > 0){
             console.log('emitting files now')
             const allFiles = Array.from(selectedFiles).map((file, index)=>{
+                file_messages.push(`\n${index+1}.${file.name}`)
                 return {
                     name:file.name,
                     type:file.type,
                     data:file
                 }
             })
-            socket.socket.emit('send_file', {"files":allFiles, "room":roomId});            
+            socket.socket.emit('send_file', {"files":allFiles, "room":roomId}, ()=>{
+                setFile([]);
+            });
+            // include file names sent and message sent
+
+            filem = new Message(socket.user.name, socket.user.user_id, file_messages.join('\n'));
+
         }
 
-        setMessages((prev)=>[...prev,message]);
+        setMessages((prev)=>[...prev, message, filem]);
         setMessageInput(''); 
 
         
