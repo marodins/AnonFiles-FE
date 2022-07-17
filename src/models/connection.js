@@ -11,7 +11,7 @@ class SocketConnect {
         this.user = new User();
     }
     init_sock(token){
-        this.socket=io(config.server_url+'/user', {auth:{token:token}});
+        this.socket=io(config.server_url+'/user', {auth:{token:token}, transports:['websocket'], upgrade:false});
         this.user.token = token
     }
     

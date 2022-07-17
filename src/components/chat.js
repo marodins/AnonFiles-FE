@@ -27,19 +27,20 @@ export const ChatMessages = ({roomId})=>{
 
     useEffect(
         ()=>{
-            socket.socket.on('all_messages', (res)=>{
+            const new_message  = ({data})=>{
+                var m = messageFromObject(data);
+                setMessages((prev)=>[...prev,m]);
+            }
+
+            socket.socket.on('new_message', new_message);
+
+            socket.socket.emit('get_all_messages', {"room":roomId}, (res)=>{
                 const m = messageFromList(res);
                 setMessages(m);
             });
-            socket.socket.on('new_message', ({data})=>{
-                var m = messageFromObject(data);
-                setMessages((prev)=>[...prev,m]);
-            });
-            socket.socket.emit('get_all_messages', {"room":roomId});
             return ()=>{
                 console.log('removing message handlers')
-                socket.socket.off('all_messages');
-                socket.socket.off('new_message');
+                socket.socket.off('new_message', new_message);
             }
         },[socket.socket]
     );
@@ -115,6 +116,7 @@ export const ChatMessages = ({roomId})=>{
                                 <CircularProgress/>:<List>
                                 { messages==0?<Box></Box>:
                                     messages.map((m, index)=>{
+                                        if(!m) return null;
                                         var justification = m.user_id === socket.user.user_id? 'right' : 'left';
                                         return (
                                             

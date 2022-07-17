@@ -7,7 +7,8 @@ import {
     ListItemText, 
     ListItemButton,
     CircularProgress,
-    Box
+    Box,
+    Paper
 } from '@mui/material';
 import { useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
@@ -40,8 +41,9 @@ export var Rooms = () => {
                 <Box sx={{display: 'flex'}}>
                     <CircularProgress/>
                 </Box>:
+                    <Paper elevation={2} style={{overflow:'auto', height:500, width:200}}>
+
                         <List>
-            
                         {rooms.map((val, index)=>{
                             if(val!=sock.socket.id){
                                 return (
@@ -63,6 +65,7 @@ export var Rooms = () => {
             
                         })}
                         </List>
+                    </Paper>
             }
 
         </Grid>
