@@ -12,11 +12,8 @@ export var Home =({cookies})=>{
     let navigate = useNavigate();
     
     useEffect(()=>{
-        console.log(cookies)
         if(socket.socket){
-            console.log("connected", socket.socket.connected)
             socket.socket.on('joined', ({room})=>{
-                console.log('received trigger on join');
                 navigate('/room', {state:{roomId:room}});
             });
         }else{

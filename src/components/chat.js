@@ -39,7 +39,6 @@ export const ChatMessages = ({roomId})=>{
                 setMessages(m);
             });
             return ()=>{
-                console.log('removing message handlers')
                 socket.socket.off('new_message', new_message);
             }
         },[socket.socket]
@@ -47,7 +46,6 @@ export const ChatMessages = ({roomId})=>{
     useEffect(
         ()=>{
             if(scroll.current){
-                console.log('current now');
                 scroll.current.scrollIntoView();
             }
         }, [gettingMessages, messages]
@@ -63,7 +61,6 @@ export const ChatMessages = ({roomId})=>{
     },[messages]);
 
     const send_message = ()=>{
-        console.log('will emit soon', roomId)
         if(messageInput == '' && selectedFiles.length == 0){
             return
         }
@@ -75,7 +72,6 @@ export const ChatMessages = ({roomId})=>{
             socket.socket.emit('send_message', {"room":roomId, "message":messageInput, "token":socket.user.token});
         }
         if (selectedFiles.length > 0){
-            console.log('emitting files now')
             const allFiles = Array.from(selectedFiles).map((file, index)=>{
                 file_messages.push(`\n${index+1}.${file.name}`)
                 return {

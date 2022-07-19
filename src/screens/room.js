@@ -20,11 +20,8 @@ export const Room = ()=>{
 
     useEffect(()=>{
         const fileHandler = (data)=>{
-            console.log('received file');
             const files = data["files"];
-            console.log(files);
             const blobs = files.map((file, index)=>{
-                console.log(file.name,file.type)
                 return {
                     name:file.name,
                     type:file.type,
@@ -32,8 +29,6 @@ export const Room = ()=>{
                 }
                 
             })
-
-            console.log(blobs);
             setReceived(blobs);
         }
         if(socket.socket && socket.socket.connected){
@@ -42,7 +37,6 @@ export const Room = ()=>{
             setError('connection');
         }
         
-        console.log('getting messages');
 
         return ()=>{
             socket.socket.off('received_file',fileHandler);

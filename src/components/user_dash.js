@@ -20,7 +20,6 @@ const UsersDash = ({room})=>{
     const [usersList, setUsers] = useState([{user_id:user_name}]);
 
     useEffect(()=>{
-        console.log('adding join etc')
         const handleJoined = ({user})=>{
             setUsers((prev)=>[...prev,user]);
         }
@@ -42,7 +41,6 @@ const UsersDash = ({room})=>{
         socket.socket.emit('get_users', {"room":room});
 
         return ()=>{
-            console.log('removing joined, all_users, left');
             socket.socket.off('joined', handleJoined);
             socket.socket.off('all_users', handleAll);
             socket.socket.off('left', handleLeft);

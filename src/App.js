@@ -31,10 +31,8 @@ function App() {
 
       setSocket();
       
-      console.log('user connected', sock.socket.id);
     });
     return ()=>{
-      console.log('closing socket')
       sock.socket.close();
     }
   }, [setSocket]);
