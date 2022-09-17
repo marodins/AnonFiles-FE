@@ -6,6 +6,11 @@ export class Message{
         this.message = message;
         this.time = time;
     }
+
+    addFileNames(files_names){
+        this.message += '\nAttachments:\n';
+        this.message += files_names.join('\n');
+    }
 }
 
 export const messageFromList = (list)=>{

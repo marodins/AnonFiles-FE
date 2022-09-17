@@ -66,11 +66,7 @@ export const ChatMessages = ({roomId})=>{
         }
         const message = new Message(socket.user.name,socket.user.user_id, messageInput);
         const file_messages = [];
-        var filem = null;
 
-        if(messageInput !== ''){
-            socket.socket.emit('send_message', {"room":roomId, "message":messageInput, "token":socket.user.token});
-        }
         if (selectedFiles.length > 0){
             const allFiles = Array.from(selectedFiles).map((file, index)=>{
                 file_messages.push(`\n${index+1}.${file.name}`)
@@ -79,17 +75,17 @@ export const ChatMessages = ({roomId})=>{
                     type:file.type,
                     data:file
                 }
-            })
+            });
             socket.socket.emit('send_file', {"files":allFiles, "room":roomId}, ()=>{
                 setFile([]);
             });
             // include file names sent and message sent
 
-            filem = new Message(socket.user.name, socket.user.user_id, file_messages.join('\n'));
+            message.addFileNames(file_messages);
 
         }
-
-        setMessages((prev)=>[...prev, message, filem]);
+        socket.socket.emit('send_message', {"room":roomId, "message":message.message, "token":socket.user.token});
+        setMessages((prev)=>[...prev, message]);
         setMessageInput(''); 
 
         
@@ -119,9 +115,11 @@ export const ChatMessages = ({roomId})=>{
                                                 <ListItem key={index} ref={scroll}>
                                                     <Grid container direction={'row'} justifyContent={justification}>
                                                         <Grid item sx={{maxWidth:'40%'}}>
-                                                            <ListItemText>
-                                                                <strong>{m.message}</strong>
-                                                            </ListItemText>
+                                                            {m.message.split('\n').map((m)=>{
+                                                               return(<ListItemText>
+                                                                    <strong>{m}</strong>
+                                                                </ListItemText>)
+                                                            })}
                                                             <ListItemText>
                                                                 {`${m.time}   ${m.user}`}
                                                             </ListItemText>
