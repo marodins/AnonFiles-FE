@@ -48,12 +48,11 @@ const UsersDash = ({room})=>{
 
     }, [socket.socket]);
     return (
-    <Grid container direction='column' justifyContent='left' alignItems='left' spacing={3}>
-        <Grid item xs={2}>
-            <Grid container justifyContent={'center'}>
+    <Grid container direction='column' justifyContent={'center'}  alignContent='center' alignItems='left' spacing={0}>
+        <Grid item xs={0}>
+
                 <Typography variant='h7'>USERS</Typography>
                 <Divider/>                    
-            </Grid>
            
         </Grid>
             

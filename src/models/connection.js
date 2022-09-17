@@ -1,6 +1,6 @@
 
 import { io, Socket } from "socket.io-client";
-import config from '../config.json';
+import c from '../config';
 import {Room} from './room';
 import User from '../models/user';
 
@@ -11,8 +11,9 @@ class SocketConnect {
         this.user = new User();
     }
     init_sock(token){
-        this.socket=io(config.server_url+'/user', {auth:{token:token}, transports:['websocket'], upgrade:false});
-        this.user.token = token
+        const url = c.protocol+c.host+c.port+'/user';
+        this.socket=io(url, {auth:{token:token}, transports:['websocket'], upgrade:false});
+        this.user.token = token;
     }
     
     registerEvents(){

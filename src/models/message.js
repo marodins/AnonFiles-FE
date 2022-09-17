@@ -10,16 +10,12 @@ export class Message{
 
 export const messageFromList = (list)=>{
     return list.map((item, index)=>{
-        return new Message(
-            item["user"],
-            item["user_id"],
-            item["message"],
-            item["time"]
-        )
+        return messageFromObject(item);
     });
 }
 
 
 export const messageFromObject = (ob)=>{
-    return new Message(ob["user"], ob["user_id"], ob["message"], ob["time"]);
+    console.log(ob);
+    return new Message(ob["user"], ob["user_id"], ob["message"], new Date(Math.floor(ob["time"])).toLocaleString());
 }

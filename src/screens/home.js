@@ -8,6 +8,7 @@ import LoginButton from '../components/login';
 import { Link } from 'react-router-dom';
 
 export var Home =({cookies})=>{
+    const [makeRoom, setMakeRoom] = useState(false);
 
     let navigate = useNavigate();
     
@@ -26,10 +27,13 @@ export var Home =({cookies})=>{
     },[socket.socket]);
     
     const submitButtonHandler = ()=>{
-        if(socket.socket.connected){
-            
-            socket.socket.emit("make_room");
-            navigate('/rooms');         
+        
+        if(socket.socket && socket.socket.connected){
+            setMakeRoom(true);
+            socket.socket.emit("make_room", ()=>{
+                navigate('/rooms'); 
+            });
+                    
         }else{
             console.log('socket not connected');
         }
@@ -51,12 +55,12 @@ export var Home =({cookies})=>{
                 <Grid container columns={{xs:3, md:10}} direction='column' rowSpacing={2} alignItems='center'>
 
                     <Grid item xs>
-                        <Button variant="contained" onClick={submitButtonHandler}>
-                            Make Room
+                        <Button variant="contained" onClick={submitButtonHandler} sx={{height:'40px', width:'150px'}}>
+                            {makeRoom ? <CircularProgress size={15} sx={{color:'white'}}/>: 'Make Room'}
                         </Button>
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" onClick={()=>navigate('/rooms')}>Your Rooms</Button>
+                        <Button variant="contained" onClick={()=>navigate('/rooms')} sx={{height:'40px', width:'150px'}}>Your Rooms</Button>
                         <Grid item xs>
                             <Divider>or</Divider>
                         </Grid>

@@ -10,11 +10,9 @@ import {useState, useEffect} from 'react';
 import sock from './models/connection';
 import {Home} from './screens/home';
 import {Rooms} from './screens/rooms';
-import config from './config.json';
 
 import {io} from 'socket.io-client';
 import {Room} from './screens/room';
-import axios from './network/axios_instance';
 import {useCookies} from 'react-cookie';
 
 

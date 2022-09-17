@@ -74,20 +74,20 @@ export const Room = ()=>{
             {receivedFiles? <ReceivedFile downloadHandler={downloadFiles} declineFiles={declineFiles} allFiles={receivedFiles}/>:null}
             {error!==0 || !socket.socket?handle_errors():
                    
-                <Grid container direction='column' alignContent='center'>
-                    <Grid container direction='row'>
-                        <Grid item xs={2}>
+                <Grid container direction='row' alignContent='center' spacing={4}>
+
+                        <Grid item>
                             <UserDash 
                                 room = {roomId}
                                 />                            
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item>
                             <ChatMessages
                                 roomId={roomId}
                                 />                              
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item>
                             <Info
                                 roomId={roomId}
                                 />                              
@@ -95,7 +95,7 @@ export const Room = ()=>{
                   
                     </Grid>
 
-                </Grid>
+                
             }
         </div>
 

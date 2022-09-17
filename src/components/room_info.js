@@ -22,24 +22,25 @@ export const Info = ({roomId})=>{
     }, [setInfo]);
 
     return(
-        <Grid container direction='column' justifyContent={'left'} alignContent={'left'} md={10}>
+        <Grid container direction='column' justifyContent={'left'} alignContent={'left'} sx={{minWidth:20}}>
             
-            <Paper elevation={6}>
+            <Paper elevation={6} sx={{padding:2, minWidth:80}}>
+
                 {Object.keys(room_info).length > 0?
                     <Grid item>
-                        <Grid item md={10}>
+                        <Grid item>
                             <Typography variant='h8'>
-                                Room Admin: {room_info.admin[1]}
+                                Room Admin: <strong>{room_info.admin[1]}</strong>
                             </Typography>
                         </Grid>
-                        <Grid item md={10}>
+                        <Grid item>
                             <Typography variant='h8'>
-                                Room Name: {roomId}
+                                Room Name: <strong>{roomId}</strong>
                             </Typography>                     
                         </Grid>
-                        <Grid item md={11}>
+                        <Grid item>
                             <Typography variant='h8'>
-                                Room Password: {room_info.pass}
+                                Room Password: <strong>{room_info.pass}</strong>
                             </Typography>                       
                         </Grid>
                     </Grid>

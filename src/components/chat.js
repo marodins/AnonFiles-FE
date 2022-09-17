@@ -105,9 +105,9 @@ export const ChatMessages = ({roomId})=>{
     }
     
     return (
-        <Grid container direction='column' alignContent={'right'} alignItems={'right'} spacing={2} xs={5}>
+        <Grid container direction='column' justifyContent={'center'} alignItems={'center'} spacing={2}>
             <Grid item>
-                <Paper style={{overflow:'auto', height:500, width:600}}>
+                <Paper style={{overflow:'auto', height:500, width:600, backgroundColor:'beige'}}>
                                  {gettingMessages?
                                 <CircularProgress/>:<List>
                                 { messages==0?<Box></Box>:
@@ -118,9 +118,9 @@ export const ChatMessages = ({roomId})=>{
                                             
                                                 <ListItem key={index} ref={scroll}>
                                                     <Grid container direction={'row'} justifyContent={justification}>
-                                                        <Grid item>
+                                                        <Grid item sx={{maxWidth:'40%'}}>
                                                             <ListItemText>
-                                                                {m.message}
+                                                                <strong>{m.message}</strong>
                                                             </ListItemText>
                                                             <ListItemText>
                                                                 {`${m.time}   ${m.user}`}
@@ -137,7 +137,7 @@ export const ChatMessages = ({roomId})=>{
                             </List>}
                     </Paper>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item>
 
                             <TextField
                                 id = "message-input"
