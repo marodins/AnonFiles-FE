@@ -12,7 +12,7 @@ const LoginButton = ()=>{
         if(socket.socket && socket.socket.connected){
             socket.socket.disconnect();
         }
-        window.location.href = `http://${c.host}${c.port}/authorize`
+        window.location.href = `${c.auth_url}`;
     }
     return (
         <Grid>

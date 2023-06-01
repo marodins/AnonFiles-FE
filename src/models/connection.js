@@ -13,6 +13,7 @@ class SocketConnect {
     init_sock(token){
         const url = c.protocol+c.host+c.port+'/user';
         this.socket=io(url, {auth:{token:token}, transports:['websocket'], upgrade:false});
+        console.log('socket is', this.socket.connected);
         this.user.token = token;
     }
     

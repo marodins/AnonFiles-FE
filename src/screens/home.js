@@ -49,7 +49,7 @@ export var Home =({cookies})=>{
             >
                 <Grid container align='right' xs={5}>
                          <Grid item xs>
-                            {cookies && cookies.token_id?null:<LoginButton/>}
+                            {cookies && cookies.token?null:<LoginButton/>}
                         </Grid>                   
                 </Grid>
                 <Grid container columns={{xs:3, md:10}} direction='column' rowSpacing={2} alignItems='center'>

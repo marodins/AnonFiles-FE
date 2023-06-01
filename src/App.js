@@ -23,7 +23,7 @@ function App() {
   useEffect(()=>{
     //send cookie on connect only!!!
     //handle on connect server side
-    sock.init_sock(cookies.token_id);
+    sock.init_sock(cookies.token);
     sock.registerEvents();
     sock.socket.on('connect', ()=>{
 
